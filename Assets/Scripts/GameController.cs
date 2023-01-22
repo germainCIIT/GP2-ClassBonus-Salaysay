@@ -67,11 +67,24 @@ public class GameController: MonoBehaviour {
 				Vector3 spawnPosition = new Vector3 (Random.Range(topLeft.x, topRight.x), topLeft.y, 0);
 				Quaternion spawnRotation = Quaternion.Euler(0, 0, 180);
 				if (waveType >= 5.0f) {
-					Instantiate(enemyType1, spawnPosition, spawnRotation);
-				} else {
-					Instantiate(enemyType2, spawnPosition, spawnRotation);
-				} 
-        yield return new WaitForSeconds (spawnInterval);
+					GameObject enemy1 = ObjectPooler.SharedInstance.GetPooledObject("Enemy Ship 1");
+					if (enemy1 != null)
+					{
+						enemy1.transform.position = spawnPosition;
+						enemy1.transform.rotation = spawnRotation;
+						enemy1.SetActive(true);
+					}
+				}
+				else {
+					GameObject enemy2 = ObjectPooler.SharedInstance.GetPooledObject("Enemy Ship 2");
+					if (enemy2 != null)
+					{
+						enemy2.transform.position = spawnPosition;
+						enemy2.transform.rotation = spawnRotation;
+						enemy2.SetActive(true);
+					}
+				}
+				yield return new WaitForSeconds (spawnInterval);
 			} 
       yield return new WaitForSeconds (waveInterval);
 		}

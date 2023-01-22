@@ -46,7 +46,7 @@ public class EnemyDroneController : MonoBehaviour {
 
 	void OnTriggerExit2D(Collider2D other) {
 		if (other.gameObject.tag == "Boundary" && other.gameObject.name != "Top Boundary") {
-			Destroy(gameObject);
+			gameObject.SetActive(false);
 		}
 	}
 
@@ -58,8 +58,8 @@ public class EnemyDroneController : MonoBehaviour {
 				Instantiate(powerUp, gameObject.transform.position, gameObject.transform.rotation);
 			}
 			Instantiate(explosion, gameObject.transform.position, gameObject.transform.rotation);
-			Destroy(other.gameObject);
-			Destroy(gameObject);
+			other.gameObject.SetActive(false);
+			gameObject.SetActive(false);
 		}
 	}
 }

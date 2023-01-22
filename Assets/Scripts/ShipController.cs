@@ -100,9 +100,15 @@ public class ShipController : MonoBehaviour {
 
   void Shoot() {
     foreach(GameObject turret in activePlayerTurrets) {
-      Instantiate(playerBullet, turret.transform.position, turret.transform.rotation);
-    }
-    shootSoundFX.Play();
+			GameObject bullet = ObjectPooler.SharedInstance.GetPooledObject("Player Bullet");
+			if (bullet != null)
+			{
+				bullet.transform.position = turret.transform.position;
+				bullet.transform.rotation = turret.transform.rotation;
+				bullet.SetActive(true);
+			}
+		}
+		shootSoundFX.Play();
   }
 
 	void UpgradeWeapons() {     
@@ -135,7 +141,13 @@ public class ShipController : MonoBehaviour {
 
 		while (true) {
 			foreach(GameObject turret in scatterShotTurrets) {
-				Instantiate(playerBullet, turret.transform.position, turret.transform.rotation);
+				GameObject bullet = ObjectPooler.SharedInstance.GetPooledObject("Player Bullet");
+				if (bullet != null)
+				{
+					bullet.transform.position = turret.transform.position;
+					bullet.transform.rotation = turret.transform.rotation;
+					bullet.SetActive(true);
+				}
 			}
 			shootSoundFX.Play();
 			yield return new WaitForSeconds(scatterShotTurretReloadTime);
